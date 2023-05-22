@@ -9,7 +9,7 @@ void setup() {
 }
 
 void loop() {
-  int adc_key_in = analogRead(0); // Read the analog value from the button inputs
+  int adc_key_in = analogRead(1); // Read the analog value from the button inputs
   // The analog values of =the buttons may vary, so you may need to adjust the threshold values accordingly
   lcd.setCursor(0, 0);
   lcd.print(adc_key_in);
@@ -17,7 +17,7 @@ void loop() {
    
 
   // Check the analog value and determine which button is pressed
-   if (adc_key_in > 1000) {
+   /*if (adc_key_in > 1000) {
     lcd.clear(); // Clear the LCD screen
     lcd.setCursor(0, 0);
     lcd.print(adc_key_in);
@@ -60,6 +60,6 @@ void loop() {
     lcd.print(adc_key_in);
     lcd.setCursor(0, 1);
     lcd.print("SELECT");
-  }
+  }*/
   delay(100); // Delay for stability
 }
