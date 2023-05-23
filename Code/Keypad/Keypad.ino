@@ -1,5 +1,8 @@
 #include <Keypad.h>
+#include <SoftwareSerial.h>
 #define MAX_SIZE 256
+#define rxPin 0
+#define txPin 1
 //#define DEBUG
 
 const byte ROWS = 4; 
@@ -28,16 +31,16 @@ int counter = 0;
 const int analogPin = A0;
 char message[MAX_SIZE] = {0};
 
+
 Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
 void sendMessage(char* message, int tam){
-  for(int i = 0; i <= counter; i++){
-    int mappedValue = map(message[i], 0, 127, 0, 255);
-    analogWrite(analogPin, mappedValue);
-  }
+  Serial.println(message);
 }
 
 
 void setup(){
+  pinMode(rxPin, INPUT);
+  pinMode(txPin, OUTPUT);
   Serial.begin(9600);
 }
 
@@ -59,10 +62,8 @@ Serial.print(curChar);
   if(read) // Lido
   {
     if(curChar == 'A'){
-    sendMessage(message, counter);
     Serial.println();
-    Serial.print("Mensagem: ");
-    Serial.println(message);
+    sendMessage(message, counter);
     
     memset(message, '\0', counter);
     counter = 0;
