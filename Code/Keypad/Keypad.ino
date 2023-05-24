@@ -33,8 +33,8 @@ char message[MAX_SIZE] = {0};
 
 
 Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS); 
-void sendMessage(char* message, int tam){
-  Serial.println(message);
+void sendMessage(char* message){
+  Serial.print('\0');
 }
 
 
@@ -62,8 +62,7 @@ Serial.print(curChar);
   if(read) // Lido
   {
     if(curChar == 'A'){
-    Serial.println();
-    sendMessage(message, counter);
+    sendMessage(message);
     
     memset(message, '\0', counter);
     counter = 0;
