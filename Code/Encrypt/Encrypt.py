@@ -1,4 +1,9 @@
+#!/usr/bin/python3
+
 import string
+import serial
+import requests
+
 
 class Rotor:
     def __init__(self, wiring, notch):
@@ -70,8 +75,41 @@ rotor3 = Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", ord('V') - ord('A'))
 reflector = Reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT")
 
 enigma = EnigmaMachine([rotor1, rotor2, rotor3], reflector)
-enigma.set_rotor_positions([0, 0, 0])
+enigma.set_rotor_positions([7, 8, 3])
 
-message = "HELLO"
-encrypted_message = enigma.encrypt(message)
-print("Encrypted Message:", encrypted_message)
+port = '/dev/ttyACM0'  # Replace with the appropriate USB port
+baud_rate = 9600      # Match the baud rate with the Arduino
+message = ''
+encrypted_message = ''
+
+# Open the serial connection
+ser = serial.Serial(port, baud_rate)
+
+while True:
+    # Read a line of data from the Arduino
+    character = ser.read().decode('utf-8')
+
+    message = message+character
+
+    if character == "\0":
+        
+        encrypted_message = enigma.encrypt(message)
+
+        url = 'http://34.175.30.196:6379/store_message?message='+encrypted_message
+
+        try:
+            response = requests.post(url)
+
+            # Check the response status code
+            if response.status_code == 200:
+                print('Message sent successfully!')
+            else:
+                print('Error sending message. Status code:', response.status_code)
+
+        except requests.exceptions.RequestException as e:
+            print('An error occurred:', e)
+
+        message = ''
+        encrypted_message = ''
+
+
