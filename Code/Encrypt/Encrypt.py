@@ -55,7 +55,7 @@ class EnigmaMachine:
                 for rotor in reversed(self.rotors):
                     letter = rotor.encrypt_backward(letter)
                 encrypted_message += letter
-                self.rotate_rotors()
+                # self.rotate_rotors()
         return encrypted_message
 
     def rotate_rotors(self):
@@ -75,7 +75,7 @@ rotor3 = Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", ord('V') - ord('A'))
 reflector = Reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT")
 
 enigma = EnigmaMachine([rotor1, rotor2, rotor3], reflector)
-enigma.set_rotor_positions([7, 8, 3])
+enigma.set_rotor_positions([2, 4, 6])
 
 port = '/dev/ttyACM0'  # Replace with the appropriate USB port
 baud_rate = 9600      # Match the baud rate with the Arduino
@@ -88,7 +88,6 @@ ser = serial.Serial(port, baud_rate)
 while True:
     # Read a line of data from the Arduino
     character = ser.read().decode('utf-8')
-
     message = message+character
 
     if character == "\0":
@@ -102,6 +101,7 @@ while True:
 
             # Check the response status code
             if response.status_code == 200:
+                print("message: ", message)
                 print('Message sent successfully!')
             else:
                 print('Error sending message. Status code:', response.status_code)

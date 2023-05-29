@@ -1,4 +1,5 @@
 import string
+import requests
 
 class Rotor:
     def __init__(self, wiring, notch):
@@ -83,13 +84,33 @@ rotor3 = Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", ord('V') - ord('A'))
 reflector = Reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT")
 
 enigma = EnigmaMachine([rotor1, rotor2, rotor3], reflector)
-enigma.set_rotor_positions([0, 0, 0])
 
+while True:
+    message = input("Enter a message (or 'q' to quit): ")
+    if message == 'q':
+        break
 
+    try:
+        rotor_pos=[3, 8, 6]
+        enigma.set_rotor_positions(rotor_pos)  # Reset rotor positions
 
-encrypted_message = enigma.encrypt(message)
-print("Encrypted Message:", encrypted_message)
+        encrypted_message = enigma.encrypt(message)
+        print("Encrypted Message:", encrypted_message)
 
-enigma.set_rotor_positions([0, 0, 0])
-decrypted_message = enigma.decrypt(encrypted_message)
-print("Decrypted Message:", decrypted_message)
+        enigma.set_rotor_positions(rotor_pos)  # Reset rotor positions
+
+        decrypted_message = enigma.decrypt(encrypted_message)
+        print("Decrypted Message:", decrypted_message)
+
+        # Send the message via HTTP POST request
+        url = "http://34.175.30.196:6379/store_message"
+        params = {"message": encrypted_message}
+        response = requests.post(url, params=params)
+
+        if response.status_code == 200:
+            print("Message sent successfully.")
+        else:
+            print("Failed to send the message. HTTP status code:", response.status_code)
+
+    except Exception as e:
+        print("An error occurred:", str(e))
