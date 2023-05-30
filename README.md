@@ -15,4 +15,11 @@ O ecrã utilizado no projeto foi um LCD Shield para arduino, como tal foi necess
 - Quando a tecla um '\0' é recebido (caratér mapeado pela tecla A no keypad) o monitor da clear da mensagem e fica pronto a receber uma nova (ao exibir o '$' que indica o início de uma nova consola de introdução de texto)
 
 ## Raspberry PI
-O raspberry PI vai atuar como unidade de processamento e comunicação em simultâneo. Vai portanto receber a mensagem, 
+O raspberry PI vai atuar como unidade de processamento e comunicação em simultâneo. Vai portanto receber a mensagem, aplicar o algoritmo de encriptação em Code/Encrypt que também vai abrir uma conexão com o serviço a correr em cloud e enviar o output encriptado. 
+
+### Google Cloud
+O Google Cloud está a correr um simples servidor http que recebe pedidos e encaminha para a aplicação android de modo às mensagens serem descodificadas
+
+## Android
+
+
