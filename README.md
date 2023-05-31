@@ -22,4 +22,39 @@ O Google Cloud está a correr um simples servidor http que recebe pedidos e enca
 
 ## Android
 
+# Enigma Decrypter
+
+O "Enigma Decrypter" é um aplicativo Flutter que implementa uma máquina de criptografia Enigma. O código consiste em várias classes que trabalham juntas para implementar o funcionamento da máquina Enigma.
+
+## Classes
+
+### EnigmaMachine
+
+A classe `EnigmaMachine` representa a máquina Enigma em si. Ela possui uma lista de rotores e um refletor. A função `setRotorPositions` é usada para definir as posições iniciais dos rotores. A função `decrypt` é usada para descriptografar uma mensagem usando a máquina Enigma. A função `rotateRotors` é responsável por girar os rotores após cada caractere descriptografado.
+
+### Rotor
+
+A classe `Rotor` representa um rotor da máquina Enigma. Cada rotor possui uma configuração de fiação, uma posição e uma posição de encaixe (notch). A função `set_position` é usada para definir a posição do rotor. As funções `encrypt_forward` e `encrypt_backward` são usadas para criptografar e descriptografar letras, respectivamente, usando o rotor.
+
+### Reflector
+
+A classe `Reflector` representa o refletor da máquina Enigma. O refletor não possui posição ou encaixe. A função `encrypt` é usada para criptografar uma letra usando o refletor.
+
+### MyApp
+
+A classe `MyApp` é a raiz do aplicativo Flutter. Ela configura o tema do aplicativo e define a página inicial como `HomePage`.
+
+### HomePage
+
+A classe `HomePage` é a página principal do aplicativo. Ela exibe uma lista de mensagens criptografadas e fornece a funcionalidade para descriptografá-las. A função `fetchData` é usada para buscar as mensagens criptografadas de uma URL fornecida. A função `decryptMessage` é usada para descriptografar uma mensagem selecionada usando a máquina Enigma.
+
+## Funcionalidades
+
+O aplicativo permite ao usuário:
+
+- Ver uma lista de mensagens criptografadas.
+- Selecionar uma mensagem para descriptografar.
+- Atualizar a lista de mensagens criptografadas.
+- Escolher as posições iniciais dos rotores.
+- Descriptografar a mensagem selecionada.
 
